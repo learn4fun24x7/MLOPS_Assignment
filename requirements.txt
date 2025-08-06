@@ -1,0 +1,10 @@
+mlflow
+scikit-learn
+pandas 
+#numpy
+#keras
+#tensorflow
+#dvc
+fastapi
+uvicorn
+pydantic

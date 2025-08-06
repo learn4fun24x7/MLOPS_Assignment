@@ -5,6 +5,7 @@ from pydantic import BaseModel
 import mlflow.pyfunc
 import pandas as pd
 import logging
+import joblib
 
 # Setup logging
 logging.basicConfig(filename="logs/predictions.log", level=logging.INFO)
@@ -20,12 +21,17 @@ class HousingInput(BaseModel):
     households: float
     median_income: float
 
+# Load model from MLflow Model from local
+model = joblib.load("model/CaliforniaHousingModel.pkl")
+
+'''
 # Load model from MLflow Model Registry
 model_name = "CaliforniaHousingModel"
 model_stage = "Staging"  # or "Production"
 # mlflow.set_tracking_uri("http://127.0.0.1:5000") # for Running this API in VM
-mlflow.set_tracking_uri("host.docker.internal:5000") # for Running this API in docker
+# mlflow.set_tracking_uri("host.docker.internal:5000") # for Running this API in docker
 model = mlflow.pyfunc.load_model(model_uri=f"models:/{model_name}/{model_stage}")
+'''
 
 # Initialize FastAPI app
 app = FastAPI()

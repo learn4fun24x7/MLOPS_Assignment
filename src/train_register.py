@@ -6,6 +6,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 import numpy as np
+import joblib
 
 def load_data():
     X_train = pd.read_csv("data/processed/X_train.csv")
@@ -34,10 +35,12 @@ def train_and_log_model(model_name, model, X_train, y_train, X_test, y_test):
         mlflow.sklearn.log_model(model, artifact_path="model")
 
         print(f"{model_name} - RMSE: {rmse:.4f}, MAE: {mae:.4f}, R2: {r2:.4f}")
-        return rmse, run.info.run_id
+        return rmse, run.info.run_id, model
 
-def register_best_model(run_id, model_name="CaliforniaHousingModel"):
+def register_best_model(model, run_id, model_name="CaliforniaHousingModel"):
     
+    joblib.dump(model, f"model/{model_name}.pkl")
+
     client = MlflowClient()
     model_uri = f"runs:/{run_id}/model"
 
@@ -62,8 +65,8 @@ if __name__ == "__main__":
     
     X_train, X_test, y_train, y_test = load_data()
 
-    rmse_lr, run_id_lr = train_and_log_model("LinearRegression", LinearRegression(), X_train, y_train, X_test, y_test)
-    rmse_dt, run_id_dt = train_and_log_model("DecisionTree", DecisionTreeRegressor(), X_train, y_train, X_test, y_test)
+    rmse_lr, run_id_lr, model = train_and_log_model("LinearRegression", LinearRegression(), X_train, y_train, X_test, y_test)
+    rmse_dt, run_id_dt, model = train_and_log_model("DecisionTree", DecisionTreeRegressor(), X_train, y_train, X_test, y_test)
 
     if rmse_lr < rmse_dt:
         best_run_id = run_id_lr
@@ -73,4 +76,4 @@ if __name__ == "__main__":
         best_model_name = "DecisionTree"
 
     print(f"Best model: {best_model_name}")
-    register_best_model(best_run_id)
+    register_best_model(model, best_run_id)

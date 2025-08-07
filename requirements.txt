@@ -8,3 +8,5 @@ pandas
 fastapi
 uvicorn
 pydantic
+#prometheus-fastapi-instrumentator
+httpx

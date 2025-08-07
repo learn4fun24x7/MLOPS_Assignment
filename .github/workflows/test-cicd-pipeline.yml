@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  lint-test-build-push:
+  test-build-deploy:
     runs-on: ubuntu-latest
 
     steps:

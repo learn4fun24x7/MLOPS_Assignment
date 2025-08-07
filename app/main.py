@@ -36,9 +36,13 @@ model = mlflow.pyfunc.load_model(model_uri=f"models:/{model_name}/{model_stage}"
 # Initialize FastAPI app
 app = FastAPI()
 
+@app.get("/")
+def read_root():
+    return {"message": "California Housing API"}
+
 @app.post("/predict")
 def predict(data: HousingInput):
-    input_dict = data.dict()
+    input_dict = data.model_dump()
     input_df = pd.DataFrame([input_dict])
 
     prediction = model.predict(input_df)[0]

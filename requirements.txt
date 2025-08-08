@@ -1,10 +1,10 @@
 mlflow
 scikit-learn
-pandas 
+pandas
 #numpy
 #keras
 #tensorflow
-#dvc
+dvc
 fastapi
 uvicorn
 pydantic

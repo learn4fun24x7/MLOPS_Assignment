@@ -25,6 +25,12 @@ jobs:
         pip install -r requirements.txt
         pip install pytest
 
+    - name: 🧪 Run Preprocessing
+      run: python src/preprocess.py
+
+    - name: 🔁 Run Training
+      run: python src/train_register.py
+
     - name: Run tests with pytest
       run: |
         pytest tests/

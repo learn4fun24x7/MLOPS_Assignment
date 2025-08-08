@@ -4,7 +4,7 @@ pandas
 #numpy
 #keras
 #tensorflow
-dvc
+dvc[gdrive]
 fastapi
 uvicorn
 pydantic

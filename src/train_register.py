@@ -6,8 +6,9 @@ from sklearn.linear_model import LinearRegression
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 import numpy as np
-import joblib
 import os
+import joblib
+
 
 os.environ['MLFLOW_TRACKING_URI'] = "https://dagshub.com/learn4fun24x7/MLOPS_Assignment.mlflow"
 os.environ['MLFLOW_TRACKING_USERNAME'] = "learn4fun24x7"

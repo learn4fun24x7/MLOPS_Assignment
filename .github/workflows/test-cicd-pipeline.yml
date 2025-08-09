@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  test-build-deploy:
+  test-build:
     runs-on: ubuntu-latest
 
     steps:
@@ -28,33 +28,11 @@ jobs:
     - name: Create GCS credentials file from Secrets
       run: echo "${{ secrets.GCS_CREDENTIALS }}" | base64 -d > gcs-creds.json
 
-    - name: Show gcs-creds.json
-      run: cat gcs-creds.json
-
-    - name: Validate gcs-creds.json
-      run: cat gcs-creds.json | jq .
-
-    - name: Debug env
-      env:
-        GOOGLE_APPLICATION_CREDENTIALS: gcs-creds.json
-      run: echo $GOOGLE_APPLICATION_CREDENTIALS
-
     - name: Pull data from DVC
       env:
         GOOGLE_APPLICATION_CREDENTIALS: gcs-creds.json
       run:
         dvc pull
-
-#    - name: Decode GCP credentials
-#      run: |
-#        echo "${{ secrets.GCS_CREDENTIALS }}" | base64 -d > gcp-key.json
-#        export GOOGLE_APPLICATION_CREDENTIALS=gcp-key.json
-
-#    - name: Authenticate with GCS
-#      env:
-#        GOOGLE_APPLICATION_CREDENTIALS: gcs-creds.json
-#      run: |
-#        dvc remote modify myremote credentialpath gcs-creds.json
 
     - name: Run Preprocessing
       run: python src/preprocess.py
@@ -81,3 +59,14 @@ jobs:
         context: .
         push: true
         tags: learn4fun24x7/california-housing-api:latest
+
+  deploy:
+    runs-on: self-hosted  # This targets your local runner
+    needs: test-build  # Waits for 'test-build' to finish
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run Docker container
+        run: |
+          docker compose up --pull always

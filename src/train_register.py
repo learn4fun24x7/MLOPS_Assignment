@@ -7,6 +7,11 @@ from sklearn.tree import DecisionTreeRegressor
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 import numpy as np
 import joblib
+import os
+
+os.environ['MLFLOW_TRACKING_URI'] = "https://dagshub.com/learn4fun24x7/MLOPS_Assignment.mlflow"
+os.environ['MLFLOW_TRACKING_USERNAME'] = "learn4fun24x7"
+os.environ["MLFLOW_TRACKING_PASSWORD"] = "2c5269c5d46153d9565cd8ef2385a9e5b1704b4a"
 
 def load_data():
     X_train = pd.read_csv("data/processed/X_train.csv")
@@ -24,6 +29,8 @@ def evaluate_model(model, X_test, y_test):
 
 def train_and_log_model(model_name, model, X_train, y_train, X_test, y_test):
     
+    mlflow.set_tracking_uri("https://dagshub.com/learn4fun24x7/MLOPS_Assignment.mlflow")
+
     with mlflow.start_run(run_name=model_name) as run:
         model.fit(X_train, y_train)
         rmse, mae, r2 = evaluate_model(model, X_test, y_test)

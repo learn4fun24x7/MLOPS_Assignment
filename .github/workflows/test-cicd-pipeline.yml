@@ -28,6 +28,17 @@ jobs:
     - name: Create GCS credentials file from Secrets
       run: echo "${{ secrets.GCS_CREDENTIALS }}" > gcs-creds.json
 
+    - name: Show gcs-creds.json
+      run: cat gcs-creds.json
+      
+    - name: Validate gcs-creds.json
+      run: cat gcs-creds.json | jq .
+
+    - name: Debug env
+      env:
+        GOOGLE_APPLICATION_CREDENTIALS: gcs-creds.json
+      run: echo $GOOGLE_APPLICATION_CREDENTIALS
+
     - name: Pull data from DVC
       env:
         GOOGLE_APPLICATION_CREDENTIALS: gcs-creds.json
@@ -44,9 +55,6 @@ jobs:
 #        GOOGLE_APPLICATION_CREDENTIALS: gcs-creds.json
 #      run: |
 #        dvc remote modify myremote credentialpath gcs-creds.json
-
-    - name: Pull data from DVC
-      run: dvc pull
 
     - name: Run Preprocessing
       run: python src/preprocess.py

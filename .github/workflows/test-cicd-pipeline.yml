@@ -25,13 +25,16 @@ jobs:
         pip install -r requirements.txt
         pip install pytest
 
-#    - name: Set up GCS credentials
-#      run: echo "${{ secrets.GCS_CREDENTIALS }}" > gcs-creds.json
+    - name: Set up GCS credentials
+      run: echo "${{ secrets.GCS_CREDENTIALS }}" > gcs-creds.json
 
-    - name: Decode GCP credentials
-      run: |
-        echo "${{ secrets.GCS_CREDENTIALS }}" | base64 -d > gcp-key.json
-        export GOOGLE_APPLICATION_CREDENTIALS=gcp-key.json
+    - name: Set up GCS credentials
+      run: export GOOGLE_APPLICATION_CREDENTIALS=gcs-creds.json
+
+#    - name: Decode GCP credentials
+#      run: |
+#        echo "${{ secrets.GCS_CREDENTIALS }}" | base64 -d > gcp-key.json
+#        export GOOGLE_APPLICATION_CREDENTIALS=gcp-key.json
 
 #    - name: Authenticate with GCS
 #      env:

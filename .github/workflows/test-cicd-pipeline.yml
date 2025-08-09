@@ -26,11 +26,11 @@ jobs:
         pip install pytest
 
     - name: Create GCS credentials file from Secrets
-      run: echo "${{ secrets.GCS_CREDENTIALS }}" > gcs-creds.json
+      run: echo "${{ secrets.GCS_CREDENTIALS }}" | base64 -d > gcs-creds.json
 
     - name: Show gcs-creds.json
       run: cat gcs-creds.json
-      
+
     - name: Validate gcs-creds.json
       run: cat gcs-creds.json | jq .
 

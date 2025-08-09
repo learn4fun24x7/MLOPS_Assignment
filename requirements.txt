@@ -4,9 +4,9 @@ pandas
 #numpy
 #keras
 #tensorflow
-dvc[gdrive]
+#dvc[gs,s3]
 fastapi
 uvicorn
 pydantic
-#prometheus-fastapi-instrumentator
 httpx
+prometheus_client

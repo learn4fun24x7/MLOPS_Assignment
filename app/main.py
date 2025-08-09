@@ -30,6 +30,7 @@ except Exception as e:
     logger.error(f"Model failed to load: {e}")
     MODEL_UP.set(0)
 
+# Input Validation
 class HousingInput(BaseModel):
     longitude: float
     latitude: float

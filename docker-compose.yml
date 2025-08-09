@@ -1,0 +1,18 @@
+version: '3.10'
+
+services:
+  california-housing-api:
+    image: learn4fun24x7/california-housing-api
+    container_name: california-housing-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./logs:/app/logs
+
+  prometheus-monitoring:
+    image: prom/prometheus
+    container_name: prometheus-monitoring
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml

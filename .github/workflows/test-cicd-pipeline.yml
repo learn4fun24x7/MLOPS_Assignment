@@ -32,7 +32,7 @@ jobs:
       env:
         GOOGLE_APPLICATION_CREDENTIALS: gcs-creds.json
       run: |
-        dvc remote modify gcs credentialpath gcs-creds.json
+        dvc remote modify myremote credentialpath gcs-creds.json
 
     - name: Pull data from DVC
       run: dvc pull

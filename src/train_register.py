@@ -1,6 +1,7 @@
 import pandas as pd
 import mlflow
 import mlflow.sklearn
+from mlflow.models import infer_signature
 from mlflow.tracking import MlflowClient
 from sklearn.linear_model import LinearRegression
 from sklearn.tree import DecisionTreeRegressor
@@ -32,14 +33,35 @@ def train_and_log_model(model_name, model, X_train, y_train, X_test, y_test):
     
     mlflow.set_tracking_uri("https://dagshub.com/learn4fun24x7/MLOPS_Assignment.mlflow")
 
+    mlflow.set_experiment("California Housing Prediction")
+
+    signature=infer_signature(X_train,y_train)
+
     with mlflow.start_run(run_name=model_name) as run:
         model.fit(X_train, y_train)
         rmse, mae, r2 = evaluate_model(model, X_test, y_test)
 
+        # Log parameters
         mlflow.log_param("model_type", model_name)
+        mlflow.log_param("imputer_strategy", 'median')
+
+        if model_name == "LinearRegression":
+            mlflow.log_param("fit_intercept", model.fit_intercept)
+            mlflow.log_param("n_jobs", model.n_jobs)
+        else: 
+            mlflow.log_param("criterion", model.criterion)
+            mlflow.log_param("max_depth", model.max_depth)
+            mlflow.log_param("random_state", model.random_state)
+            mlflow.log_param("min_samples_split", model.min_samples_split)
+            mlflow.log_param("min_samples_leaf", model.min_samples_leaf)
+            mlflow.log_param("max_features", model.max_features)
+        
+        # Log metrics
         mlflow.log_metric("rmse", rmse)
         mlflow.log_metric("mae", mae)
         mlflow.log_metric("r2", r2)
+
+        # Log model
         mlflow.sklearn.log_model(model, artifact_path="model")
 
         print(f"{model_name} - RMSE: {rmse:.4f}, MAE: {mae:.4f}, R2: {r2:.4f}")

@@ -61,8 +61,8 @@ jobs:
         push: true
         tags: learn4fun24x7/california-housing-api:latest
 
-  deploy:
-    runs-on: self-hosted  # This targets your local runner
+  Deploy:
+    runs-on: self-hosted  # This targets local runner
     needs: Build-Test-Publish
     steps:
       - name: Checkout code

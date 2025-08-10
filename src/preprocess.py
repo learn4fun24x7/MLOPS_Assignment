@@ -47,14 +47,12 @@ def preprocess_data(input_path: str, output_dir: str, test_size: float = 0.2, ra
     ])
 
     # Categorical pipeline: Impute missing values with the most frequent value, then One-Hot Encode
-    # 'ocean_proximity' is the only categorical feature in this dataset.
     categorical_transformer = Pipeline(steps=[
         ('imputer', SimpleImputer(strategy='most_frequent')),
         ('onehot', OneHotEncoder(handle_unknown='ignore')) # handle_unknown='ignore' allows unseen categories during transform
     ])
 
     # Combine preprocessing steps using ColumnTransformer
-    # This applies different transformers to different columns
     preprocessor = ColumnTransformer(
         transformers=[
             ('num', numerical_transformer, num_cols),

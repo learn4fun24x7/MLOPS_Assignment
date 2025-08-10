@@ -1,34 +1,34 @@
 # MLOPS Assignment
 
 ## Scenario
-You’ve been tasked with building a minimal but complete MLOps pipeline for an ML model using a well-known open dataset. Your model should be trained, tracked, versioned, deployed as an API, and monitored for prediction usage.
+Building a minimal but complete MLOps pipeline for a ML model using California Housing open dataset Kaggle. The model is trained, tracked, versioned, deployed as an API, and monitored for prediction usage.
 
 ## Learning Outcomes
-- Use Git, DVC, and MLflow for versioning and tracking.
-- Package your ML code into a REST API (Flask/FastAPI).
-- Containerize and deploy it using Docker.
-- Set up a GitHub Actions pipeline for CI/CD.
-- Implement basic logging and optionally expose monitoring metrics.
+- Used Git, DVC, and MLflow for versioning and tracking.
+- Packaged ML code as a REST API using FastAPI.
+- Containerized and deployed it using Docker.
+- Configured a GitHub Actions pipeline for CI/CD.
+- Implemented basic logging and exposed monitoring metrics.
 
 ## Technologies
 - Git + GitHub
-- DVC (optional for Iris, useful for housing)
+- DVC
 - MLflow
 - Docker
 - Flask or FastAPI
 - GitHub Actions
-- Logging module (basic); Optional: Prometheus/Grafana
+- Logging module with Prometheus/Grafana
 
 ## Assignment Tasks
 
 ### Part 1: Repository and Data Versioning (4 marks)
 - Set up a GitHub repo.
 - Load and preprocess the dataset.
-- Track the dataset (optionally with DVC if using California Housing).
+- Track the dataset with DVC (if using California Housing).
 - Maintain clean directory structure.
 
 ### Part 2: Model Development & Experiment Tracking
-- Train at least two models (e.g., Logistic Regression, RandomForest for Iris; Linear Regression, Decision Tree for Housing).
+- Train at least two models (Linear Regression, Decision Tree for Housing).
 - Use MLflow to track experiments (params, metrics, models).
 - Select best model and register in MLflow.
 

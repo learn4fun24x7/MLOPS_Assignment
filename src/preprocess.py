@@ -29,7 +29,7 @@ def preprocess_data(input_path: str, output_dir: str, test_size: float = 0.2, ra
     print(df.isnull().sum())
 
     # Split features and target
-    X = df.drop("median_house_value", axis=1)
+    X = df.drop("median_house_value", axis=1).drop("ocean_proximity", axis=1)
     y = df["median_house_value"]
 
     # Identify numerical and categorical columns
@@ -68,9 +68,11 @@ def preprocess_data(input_path: str, output_dir: str, test_size: float = 0.2, ra
     X_train_processed = preprocessor.fit_transform(X_train)
     X_test_processed = preprocessor.transform(X_test)
 
-    ohe_feature_names = preprocessor.named_transformers_['cat'].named_steps['onehot'].get_feature_names_out(cat_cols)
-
-    processed_feature_names = list(num_cols) + list(ohe_feature_names)
+    if cat_cols != []:   
+        ohe_feature_names = preprocessor.named_transformers_['cat'].named_steps['onehot'].get_feature_names_out(cat_cols)
+        processed_feature_names = list(num_cols) + list(ohe_feature_names)
+    else:
+        processed_feature_names = list(num_cols)
 
     # Convert processed arrays back to DataFrames for easier inspection and further use
     X_train_processed = pd.DataFrame(X_train_processed, columns=processed_feature_names, index=X_train.index)

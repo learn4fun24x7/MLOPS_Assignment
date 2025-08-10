@@ -105,5 +105,5 @@ if __name__ == "__main__":
         best_run_id = run_id_dt
         best_model_name = "DecisionTree"
 
-    print(f"Best model: {best_model_name}")
+    print(f"Best model : {best_model_name}")
     register_best_model(model, best_run_id)

@@ -1,7 +1,7 @@
 # MLOPS Assignment
 
 ## Scenario
-Building a minimal but complete MLOps pipeline for a ML model using California Housing open dataset Kaggle. The model is trained, tracked, versioned, deployed as an API, and monitored for prediction usage.
+Building a minimal but complete MLOps pipeline for a ML model using California Housing open dataset Kaggle. The model needs to be trained, tracked, versioned, deployed as an API, and monitored for prediction usage.
 
 ## Learning Outcomes
 - Used Git, DVC, and MLflow for versioning and tracking.

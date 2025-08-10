@@ -7,6 +7,9 @@ WORKDIR /app
 # Copy project files
 COPY . /app
 
+# Copy README.md into the container
+COPY Docker-README.md /app/README.md
+
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
